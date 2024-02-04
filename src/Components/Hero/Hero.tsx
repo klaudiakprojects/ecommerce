@@ -21,16 +21,39 @@ const ImageSlider = () => {
 
   return (
     <Slider {...sliderSettings}>
-      <div>
-        <img src={heroSlider1} alt="Coffee 1" />
+    <div>
+      <div className="slider-item">
+        <img src={heroSlider1} />
+        <div className="slider-caption">
+          <span className="first-slider-text">Coffee beans -30%</span>
+          <button className="buy-now-button">BUY NOW</button>
+          </div>
+
       </div>
-      <div>
-        <img src={heroSlider2} alt="Coffee 2" />
+    </div>
+    <div>
+      <div className="slider-item">
+        <img src={heroSlider2} />
+        <div className="slider-caption">
+        <span className="second-slider-text">
+          Check available ground coffee
+          </span>
+          <button className="buy-now-button">BUY NOW</button>
+          </div>
       </div>
-      <div>
-        <img src={heroSlider3} alt="Coffee 3" />
+    </div>
+    <div>
+      <div className="slider-item">
+        <img src={heroSlider3} />
+        <div className="slider-caption">
+        <span className="third-slider-text">
+          Check available coffee beans
+          </span>
+          <button className="buy-now-button">BUY NOW</button>
+          </div>
       </div>
-    </Slider>
+    </div>
+  </Slider>
   );
 };
 

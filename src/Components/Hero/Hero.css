@@ -1,9 +1,62 @@
 .image-slider-container {
-    width: 100%;
-  }
-  
-  img {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-  }
+  width: 100%;
+}
+
+img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.slider-caption {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 24px;
+  text-align: center;
+}
+
+.slider-item {
+  position: relative;
+}
+
+.first-slider-text {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  transform: translate(-50%, -50%);
+  margin-left: 20%;
+  font-size: 40px;
+}
+
+.second-slider-text {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  font-size: 40px;
+  position: absolute;
+  right: 50%;
+  left: 50%;
+}
+
+.third-slider-text {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  font-size: 40px;
+}
+
+.buy-now-button {
+  background-color: rgb(134, 106, 106);
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
