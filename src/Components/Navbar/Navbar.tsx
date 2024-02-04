@@ -1,6 +1,7 @@
 import React from 'react';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
+import { FaShoppingBasket } from "react-icons/fa";
 
 const Navbar = () => {
     return (
@@ -16,7 +17,9 @@ const Navbar = () => {
 <div className="nav-login">
     <button><Link to='/login'>Login</Link></button>
     <button><Link to='/register'>Register</Link></button>
-    <button><Link to='/cart'>Cart</Link></button>
+    </div>
+    <div className="cart-icon">
+    <button><Link to='/cart'><FaShoppingBasket /></Link></button>
 </div>
         </div>
     )

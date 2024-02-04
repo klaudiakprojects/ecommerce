@@ -1,4 +1,3 @@
-// Recommended.tsx
 import React from 'react';
 import './Recommended.css';
 import allProducts from '../Assets/data';
@@ -9,7 +8,6 @@ interface Product {
   name: string;
   image: string;
   new_price: number;
-  old_price: number;
 }
 
 const Recommended: React.FC = () => {
@@ -26,8 +24,7 @@ const Recommended: React.FC = () => {
             // id={item.id}
             name={item.name}
             image={item.image}
-            new_price={item.new_price}
-            old_price={item.old_price}
+            new_price={<span>{item.new_price} zł</span>}
           />
         ))}
       </div>
