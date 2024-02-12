@@ -21,7 +21,7 @@ const Recommended: React.FC = () => {
         recommendedProducts.map((item: Product, i: number) => (
           <Item
             key={i}
-            // id={item.id}
+            id={item.id}
             name={item.name}
             image={item.image}
             new_price={<span>{item.new_price} zł</span>}

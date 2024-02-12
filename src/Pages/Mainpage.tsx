@@ -6,7 +6,6 @@ import Footer from '../Components/Footer/Footer'
 export const Mainpage = () => {
   return (
     <div>
-        {/* <Hero/> */}
               <ImageSlider />
               <Recommended />
               <Footer />

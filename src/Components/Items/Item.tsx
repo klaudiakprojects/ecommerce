@@ -1,18 +1,22 @@
 import React, { ReactNode } from 'react'
 import './Item.css'
+import { Link } from 'react-router-dom';
 
 export const Item = (props: {
-    new_price: ReactNode; image: string | undefined; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; 
+  new_price: ReactNode; image: string; name: string, id: number
 }) => {
   return (
     <div className="item">
+      <Link to={`/product/${props.id}`}>
         <img src={props.image} />
         <p>{props.name}</p>
-        <div className="item-prices">
-            <div className="item-new-price">
-                {props.new_price}
-            </div>
+      </Link>
+
+      <div className="item-prices">
+        <div className="item-new-price">
+          {props.new_price}
         </div>
+      </div>
     </div>
   )
 }
