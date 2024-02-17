@@ -39,7 +39,7 @@ interface Product {
   id: number;
   name: string;
   image: string;
-  new_price: number;
+  price: number;
 }
 
 const Recommended: React.FC = () => {
@@ -55,7 +55,7 @@ const Recommended: React.FC = () => {
               id={item.id}
               name={item.name}
               image={item.image}
-              new_price={<span>{item.new_price} zł</span>}
+              price={<span>{item.price} zł</span>}
             />
           ))}
       </div>

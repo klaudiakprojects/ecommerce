@@ -3,7 +3,7 @@ import './Item.css'
 import { Link } from 'react-router-dom';
 
 export const Item = (props: {
-  new_price: ReactNode; image: string; name: string, id: number
+  price: ReactNode; image: string; name: string, id: number
 }) => {
   return (
     <div className="item">
@@ -14,7 +14,7 @@ export const Item = (props: {
 
       <div className="item-prices">
         <div className="item-new-price">
-          {props.new_price}
+          {props.price}
         </div>
       </div>
     </div>

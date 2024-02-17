@@ -2,12 +2,44 @@ import React from 'react';
 import allProducts from '../Assets/data';
 import './SingleProductCategoryPage.css'
 import { useParams } from 'react-router-dom';
+import Product from '../../Pages/Product';
 
-interface SingleProductCategoryPageProps {
-  new_price: React.ReactNode;
-  image: string | undefined;
+
+interface Product {
+  id: number;
   name: string;
+  price: number;
+  image: string;
 }
+
+interface CartItem {
+  id: number;
+  quantity: number;
+}
+
+const addToCart = (id: number, quantity: number) => {
+  console.log("Dodano do koszyka!");
+
+  const product = allProducts.find(product =>
+    product.id === id
+  )
+
+  const existingCartStorage = localStorage.getItem('cart-items') || '[]';
+  const existingCart: CartItem[] = JSON.parse(existingCartStorage);
+
+  const existingCartItem = existingCart.find(item => item.id === id);
+
+  if (existingCartItem) {
+    existingCartItem.quantity += quantity
+  } else {
+    existingCart.push({id, quantity})
+  }
+
+  const newCart = JSON.stringify(existingCart);
+  
+  localStorage.setItem('cart-items', newCart)
+};
+
 
 const SingleProductCategoryPage: React.FC = (props) => {
 
@@ -16,15 +48,17 @@ const SingleProductCategoryPage: React.FC = (props) => {
   const product = allProducts.find(product =>
     product.id === Number(productId))!
 
+
+
   return (
     <div className="product">
       <img src={product.image} alt={product.name} />
       <div className="product-details">
         <p>{product.name}</p>
         <div className="product-new-price">
-        {<span>{product.new_price} zł</span>}
+          {<span>{product.price} zł</span>}
         </div>
-        <button className="add-to-cart">ADD TO CART</button>
+        <button className="add-to-cart" onClick={() => {addToCart(product.id, 1)}}>ADD TO CART</button>
         <div className="product-description">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sagittis mi sapien, in porttitor lorem porta commodo. In purus dolor, tristique non massa placerat, aliquam fringilla sem. Phasellus non mauris neque.
           Maecenas sed justo sed tortor pellentesque eleifend. In hac habitasse platea dictumst. Curabitur maximus ligula id risus porttitor elementum. Praesent sit amet diam in metus rhoncus efficitur at sit amet orci.
@@ -37,5 +71,8 @@ const SingleProductCategoryPage: React.FC = (props) => {
     </div>
   );
 };
+
+
+
 
 export default SingleProductCategoryPage;

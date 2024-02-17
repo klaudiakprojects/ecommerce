@@ -5,49 +5,49 @@ let allProducts = [
     id: 1,
     name: 'Coffee beans 80g',
     image: product1_img,
-    new_price: 15.99,
+    price: 15.99,
 },
 {
     id: 2,
     name: 'Coffee beans 100g',
     image: product1_img,
-    new_price: 22.99,
+    price: 22.99,
 },
 {
     id: 3,
     name: 'Coffee beans 100g',
     image: product1_img,
-    new_price: 30.99,
+    price: 30.99,
 },
 {
     id: 4,
     name: 'Coffee beans 30g',
     image: product1_img,
-    new_price: 10.99,
+    price: 10.99,
 },
 {
     id: 5,
     name: 'Coffee beans XYZ 100g',
     image: product1_img,
-    new_price: 35.99,
+    price: 35.99,
 },
 {
     id: 6,
     name: 'Coffee beans 50g',
     image: product1_img,
-    new_price: 17.99,
+    price: 17.99,
 },
 {
     id: 7,
     name: 'Coffee beans 150g',
     image: product1_img,
-    new_price: 22.99,
+    price: 22.99,
 },
 {
     id: 8,
     name: 'Coffee beans 100g',
     image: product1_img,
-    new_price: 20.99,
+    price: 20.99,
 }
 
 ]
