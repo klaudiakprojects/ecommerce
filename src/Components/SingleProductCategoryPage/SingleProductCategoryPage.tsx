@@ -36,7 +36,7 @@ const addToCart = (id: number, quantity: number) => {
   }
 
   const newCart = JSON.stringify(existingCart);
-  
+  console.log(newCart)
   localStorage.setItem('cart-items', newCart)
 };
 
