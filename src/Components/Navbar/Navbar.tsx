@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingBasket } from "react-icons/fa";
+import allProducts from '../Assets/data';
+
 
 const Navbar = () => {
     return (
@@ -12,9 +14,8 @@ const Navbar = () => {
                 <li><Link to='/beans'>Beans</Link></li>
                 <li><Link to='/promotions'>Promotions</Link></li>
             </ul>
-            <div className="search-bar">
-                <input type="search" placeholder="Search..."></input>
-            </div>
+            <Search />
+
             <div className="nav-login">
                 <button><Link to='/login'>Login</Link></button>
                 <button><Link to='/register'>Register</Link></button>
@@ -25,5 +26,36 @@ const Navbar = () => {
         </div>
     )
 }
+
+const Search = () => {
+    const [keyword, setKeyword] = useState('');
+
+    const navigate = useNavigate();
+
+    const searchHandler = (e: any) => {
+        e.preventDefault();
+
+        if (keyword.trim()) {
+            navigate(`/search/${keyword}`)
+        } else {
+            navigate('/')
+        }
+
+        const filteredProducts = allProducts.filter((product) =>
+            product.name.toLowerCase().includes(keyword.toLowerCase())
+        );
+
+    }
+
+
+
+    return <>
+        <div className="search-bar">
+            <form onSubmit={searchHandler}><input type="search" placeholder="Search..." onChange={(e) => setKeyword(e.target.value)}></input></form>
+        </div>
+    </>
+
+}
+
 
 export default Navbar;

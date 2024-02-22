@@ -11,6 +11,7 @@ import About from './Pages/About';
 import FAQPage from './Pages/FAQPage';
 import ContactPage from './Pages/ContactPage';
 import SingleProductCategoryPage from './Components/SingleProductCategoryPage/SingleProductCategoryPage';
+import Search from './Pages/Search';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
           <Route path='/promotions' element={<ProductCategory />} />
           <Route path='/product' element={<SingleProductCategoryPage/>}>
             <Route path=':productId' element={<SingleProductCategoryPage/>} />
+          </Route>
+          <Route path='/search' element={<Search/>}>
+            <Route path=':searchKeyword' element={<Search/>} />
           </Route>
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<Login />} />
