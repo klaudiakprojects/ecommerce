@@ -21,3 +21,24 @@ test('Go to Promotions Category', async ({ page }) => {
   await mainpage.goTo();
   await mainpage.goToPromotionsCategory();
 });
+
+test('Go to About Page', async ({ page }) => {
+  const mainpage = new Mainpage(page);
+
+  await mainpage.goTo();
+  await mainpage.goToAboutPage();
+});
+
+test('Go to FAQ Page', async ({ page }) => {
+  const mainpage = new Mainpage(page);
+
+  await mainpage.goTo();
+  await mainpage.goToFAQPage();
+});
+
+test('Go to Contact Us Page', async ({ page }) => {
+  const mainpage = new Mainpage(page);
+
+  await mainpage.goTo();
+  await mainpage.goToContactUsPage();
+});

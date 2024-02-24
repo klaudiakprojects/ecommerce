@@ -57,6 +57,7 @@ const Recommended: React.FC<{ category: string }> = ({ category }) => {
         ))}
       </div>
     </div>
+    
   );
 };
 

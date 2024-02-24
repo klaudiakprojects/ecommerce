@@ -8,7 +8,7 @@ export const Item = (props: {
   return (
     <div className="item">
       <Link to={`/product/${props.id}`}>
-        <img src={props.image} />
+      <img className="product-image" src={require(`../Assets/${props.image}`)} alt={props.name} />
         <p>{props.name}</p>
       </Link>
 

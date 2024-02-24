@@ -52,7 +52,7 @@ const SingleProductCategoryPage: React.FC = (props) => {
 
   return (
     <div className="product">
-      <img src={product.image} alt={product.name} />
+                <img className="product-image" src={require(`../Assets/${product.image}`)} alt={product.name} />
       <div className="product-details">
         <p>{product.name}</p>
         <div className="product-new-price">

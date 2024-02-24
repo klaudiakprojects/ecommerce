@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import allProducts from '../Assets/data';
 import './CartProducts.css';
 
+
 interface CartItem {
   id: number;
   quantity: number;
@@ -38,7 +39,6 @@ const CartProducts: React.FC = () => {
       return updatedCart;
     });
   };
-  
 
   return (
     <div className="cart-products-container">
@@ -49,7 +49,8 @@ const CartProducts: React.FC = () => {
           return (
             <li key={item.id} className="cart-item">
               <div className="product-info">
-                <img className="product-image" src={productDetails.image} alt={productDetails.name} />
+                <img className="product-image" src={require(`../Assets/${productDetails.image}`)} alt={productDetails.name} />
+
                 <div className="product-details">
                   <span className="product-name">{productDetails.name}</span>
                   <span className="product-price">{productDetails.price} zł</span>
