@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { Mainpage } from '../Pages/mainpage';
+import { Mainpage } from './Pages/mainpage';
 
 test('Go to Ground Category', async ({ page }) => {
   const mainpage = new Mainpage(page);
@@ -41,4 +41,18 @@ test('Go to Contact Us Page', async ({ page }) => {
 
   await mainpage.goTo();
   await mainpage.goToContactUsPage();
+});
+
+test('Validate Hero Section', async ({ page }) => {
+  const mainpage = new Mainpage(page);
+
+  await mainpage.goTo();
+  await mainpage.validateHeroSection();
+});
+
+test('Validate Recommended Section', async ({ page }) => {
+  const mainpage = new Mainpage(page);
+
+  await mainpage.goTo();
+  await mainpage.validateRecommendedSection();
 });
