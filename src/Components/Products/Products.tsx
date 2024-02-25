@@ -35,6 +35,13 @@ export const Products = () => {
   return (
     <div className="products-grid">
       <h2>{currentCategoryName.toUpperCase()}</h2>
+      <select name="sort">
+    <option value="asc">Sort A-Z</option>
+    <option value="desc">Sort Z-A</option>
+    <option value="highToLow">Sort Highest to Lowest Prices</option>
+    <option value="lowToHigh">Sort Lowest to Highest Prices</option>
+</select>
+
       <Recommended category={currentCategoryName} />
     </div>
   );

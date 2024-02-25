@@ -16,3 +16,7 @@ h2 {
     text-decoration: none;
     color: black;
 }
+
+.products-grid select {
+    margin-left: 20px;
+}
