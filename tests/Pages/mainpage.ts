@@ -73,8 +73,8 @@ export class Mainpage {
     async goToGroundCategory(): Promise<void> {
         this.goTo();
         await this.groundCategoryButton.click();
-        await expect(this.page).toHaveURL(/.*ground/);
-        await expect(this.categoryPageHeader).toContainText('GROUND');
+        expect(this.page).toHaveURL(/.*ground/);
+        expect(this.categoryPageHeader).toContainText('GROUND');
         await this.getProductsId();
         await this.productsCategoryCheck();
     };
@@ -82,8 +82,8 @@ export class Mainpage {
     async goToBeansCategory(): Promise<void> {
         this.goTo();
         await this.beansCategoryButton.click();
-        await expect(this.page).toHaveURL(/.*beans/);
-        await expect(this.categoryPageHeader).toContainText('BEANS');
+        expect(this.page).toHaveURL(/.*beans/);
+        expect(this.categoryPageHeader).toContainText('BEANS');
         await this.getProductsId();
         await this.productsCategoryCheck();
     };
@@ -91,51 +91,51 @@ export class Mainpage {
     async goToPromotionsCategory(): Promise<void> {
         this.goTo();
         await this.promotionsCategoryButton.click();
-        await expect(this.page).toHaveURL(/.*promotions/);
-        await expect(this.categoryPageHeader).toContainText('PROMOTIONS');
+        expect(this.page).toHaveURL(/.*promotions/);
+        expect(this.categoryPageHeader).toContainText('PROMOTIONS');
         await this.getProductsId();
         await this.productsCategoryCheck();
     };
 
     async goToAboutPage(): Promise<void> {
         this.goTo();
-        await expect(this.footerAboutLink).toHaveText('About')
-        await expect(this.footerAboutLink).not.toBeDisabled();
+        expect(this.footerAboutLink).toHaveText('About')
+        expect(this.footerAboutLink).not.toBeDisabled();
         await this.footerAboutLink.click();
-        await expect(this.footerPagesH2).toContainText('ABOUT US');
-        await expect(this.aboutUsTextOnPage).not.toBeEmpty();
+        expect(this.footerPagesH2).toContainText('ABOUT US');
+        expect(this.aboutUsTextOnPage).not.toBeEmpty();
     };
 
     async goToFAQPage(): Promise<void> {
         this.goTo();
-        await expect(this.footerFAQLink).toHaveText('FAQ');
-        await expect(this.footerFAQLink).not.toBeDisabled();
+        expect(this.footerFAQLink).toHaveText('FAQ');
+        expect(this.footerFAQLink).not.toBeDisabled();
         await this.footerFAQLink.click();
-        await expect(this.footerPagesH2).toContainText('FAQ');
+        expect(this.footerPagesH2).toContainText('FAQ');
     };
 
     async goToContactUsPage(): Promise<void> {
         this.goTo();
-        await expect(this.footerContactUs).toHaveText('Contact us');
-        await expect(this.footerContactUs).not.toBeDisabled();
+        expect(this.footerContactUs).toHaveText('Contact us');
+        expect(this.footerContactUs).not.toBeDisabled();
         await this.footerContactUs.click();
-        await expect(this.footerPagesH2).toContainText('Contact us');
+        expect(this.footerPagesH2).toContainText('Contact us');
     };
 
     async validateHeroSection(): Promise<void> {
         this.goTo();
         await this.firstSliderImg.first().waitFor({ state: 'visible' });
-        await expect(this.firstSliderImg.first()).toBeVisible();
-        await expect(this.secondSliderImg.first()).toBeVisible();
-        await expect(this.firstSliderText.first()).toContainText('Coffee beans -30%');
-        await expect(this.firstSliderButton.first()).not.toBeDisabled();
-        await expect(this.firstSliderButton.first()).toContainText('BUY NOW');
-        await expect(this.secondSliderText.first()).toContainText('Check available ground coffee');
+        expect(this.firstSliderImg.first()).toBeVisible();
+        expect(this.secondSliderImg.first()).toBeVisible();
+        expect(this.firstSliderText.first()).toContainText('Coffee beans -30%');
+        expect(this.firstSliderButton.first()).not.toBeDisabled();
+        expect(this.firstSliderButton.first()).toContainText('BUY NOW');
+        expect(this.secondSliderText.first()).toContainText('Check available ground coffee');
     };
 
     async validateRecommendedSection(): Promise<void> {
         this.goTo();
-        await expect(this.recommendedH2).toContainText('RECOMMENDED PRODUCTS');
+        expect(this.recommendedH2).toContainText('RECOMMENDED PRODUCTS');
         await expect(this.recommendedProducts).not.toBeEmpty();
         await expect(this.recommendedProduct).toHaveCount(3);
 
@@ -144,8 +144,8 @@ export class Mainpage {
             await expect(img).toBeVisible();
         }));
               
-        await expect(this.recommendedProductImg).toHaveCount(3);
-        await expect(this.recommendedProductTitle).toHaveCount(3);
-        await expect(this.recommendedProductPrice).toHaveCount(3);
+        expect(this.recommendedProductImg).toHaveCount(3);
+        expect(this.recommendedProductTitle).toHaveCount(3);
+        expect(this.recommendedProductPrice).toHaveCount(3);
     };
 };
