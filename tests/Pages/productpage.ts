@@ -2,7 +2,6 @@ import { expect, Locator, Page } from '@playwright/test';
 import allProducts from '../../src/Components/Assets/data.js';
 import { waitFor } from '@testing-library/react';
 
-
 export class ProductPage {
     readonly page: Page;
     readonly productTitle: Locator;
@@ -30,5 +29,10 @@ export class ProductPage {
         expect(this.productImage).toBeVisible();
         expect(this.productDescription).not.toBeEmpty();
         expect(this.addToCartButton).not.toBeDisabled();
+        expect(this.productPrice).toBeVisible();
     };
+
+    async validateProductFromCategoryPage() {
+
+    }
 };

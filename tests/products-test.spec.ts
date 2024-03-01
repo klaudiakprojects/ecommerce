@@ -3,8 +3,6 @@ import { ProductPage } from './Pages/productpage';
 import { Mainpage } from './Pages/mainpage';
 import { Categorypage } from './Pages/categorypage';
 
-
-
 test('Verify product page', async ({ page }) => {
   const productPage = new ProductPage(page);
   const mainpage = new Mainpage(page);
@@ -14,5 +12,4 @@ test('Verify product page', async ({ page }) => {
   await mainpage.goToGroundCategory();
   await categorypage.goToFirstProduct();
   await productPage.validateProductPage();
-
 });
