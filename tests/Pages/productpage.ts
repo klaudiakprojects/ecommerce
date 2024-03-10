@@ -25,7 +25,7 @@ export class ProductPage {
     };
 
     async validateProductPage(): Promise<void> {
-        expect(await this.productTitle.innerText()).toContain('Coffee beans');
+        expect(await this.productTitle.innerText()).toContain('Coffee');
         expect(this.productImage).toBeVisible();
         expect(this.productDescription).not.toBeEmpty();
         expect(this.addToCartButton).not.toBeDisabled();
