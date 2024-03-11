@@ -4,6 +4,7 @@ import { waitFor } from '@testing-library/react';
 
 
 export class Categorypage {
+
     readonly page: Page;
     readonly groundCategoryButton: Locator;
     readonly beansCategoryButton: Locator;
@@ -14,7 +15,13 @@ export class Categorypage {
     readonly firstProductPriceOnCategoryPage: Locator;
     readonly productTitleOnProductPage: Locator;
     readonly productPriceOnProductPage: Locator;
-    
+    readonly sortSelect: Locator;
+    readonly sortFromAToZ: Locator;
+    readonly sortFromZtoA: Locator;
+    readonly sortPriceLowToHigh: Locator;
+    readonly sortPriceHighToLow: Locator;
+    readonly productTitles: Locator;
+    readonly productPrices: Locator;
 
 
     constructor(page: Page) {
@@ -28,7 +35,9 @@ export class Categorypage {
         this.firstProductPriceOnCategoryPage = page.locator('.item-new-price span').first();
         this.productTitleOnProductPage = page.locator('.product-details p');
         this.productPriceOnProductPage = page.locator('.product-new-price span');
-        
+        this.productTitles = page.locator('.item p');
+        this.productPrices = page.locator('.item span');
+        this.sortSelect = page.locator('.sort');
     }
 
     async goTo(): Promise<void> {
@@ -46,5 +55,44 @@ export class Categorypage {
         const productPriceOnProductPage = await this.productPriceOnProductPage.innerText();
         expect(this.firstProductTitleOnCategoryPage).toHaveText(productTitleOnProductPage);
         expect(this.firstProductPriceOnCategoryPage).toHaveText(productPriceOnProductPage);
+    }
+
+    async validateSortingFromAToZ(productsNamesAZ: string[]): Promise<void> {
+        await this.sortSelect.click();
+        await this.sortSelect.selectOption({ value: "asc" });
+
+        const productTitles = await Promise.all(
+            (await this.productTitles.all())
+                .map(async (titleLocator) => {
+                    return titleLocator.innerText();
+                }));
+
+        expect(productTitles).toEqual(productsNamesAZ);
+    };
+
+    async validateSortingFromZToA(productsNamesZA: string[]): Promise<void> {
+        await this.sortSelect.click();
+        await this.sortSelect.selectOption({ value: "desc" });
+
+        const productTitles = await Promise.all(
+            (await this.productTitles.all())
+                .map(async (titleLocator) => {
+                    return titleLocator.innerText();
+                }));
+
+        expect(productTitles).toEqual(productsNamesZA);
+    };
+
+    async validateSortingHighToLowPrice(): Promise<void> {
+        await this.sortSelect.click();
+        await this.sortSelect.selectOption({ value: "highToLow" });
+
+        const productPrices = await Promise.all(
+            (await this.productPrices.all())
+                .map(async (priceLocator) => {
+                    return (await priceLocator.innerText()).split(' ').shift();
+                })
+        )
+
     }
 };

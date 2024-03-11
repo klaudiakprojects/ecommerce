@@ -44,11 +44,11 @@ export const Products = () => {
   return (
     <div className="products-grid">
       <h2>{currentCategoryName.toUpperCase()}</h2>
-      <select name="sort" onChange={sortProducts}>
-        <option value="asc">Sort A-Z</option>
-        <option value="desc">Sort Z-A</option>
-        <option value="highToLow">Sort Highest to Lowest Prices</option>
-        <option value="lowToHigh">Sort Lowest to Highest Prices</option>
+      <select name="sort" className='sort' onChange={sortProducts}>
+        <option value="asc" className='asc'>Sort A-Z</option>
+        <option value="desc" className='desc'>Sort Z-A</option>
+        <option value="highToLow" className='highToLow'>Sort Highest to Lowest Prices</option>
+        <option value="lowToHigh" className='lowToHigh'>Sort Lowest to Highest Prices</option>
       </select>
 
       <Recommended category={currentCategoryName} sort={sort} />
