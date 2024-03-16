@@ -90,9 +90,28 @@ export class Categorypage {
         const productPrices = await Promise.all(
             (await this.productPrices.all())
                 .map(async (priceLocator) => {
-                    return (await priceLocator.innerText()).split(' ').shift();
+                    return Number((await priceLocator.innerText()).split(' ').shift());
                 })
-        )
+        );
 
-    }
+        for (let i = 1; i < productPrices.length; i++) {
+            expect(productPrices[i]).toBeLessThanOrEqual(productPrices[i - 1]);
+        }
+    };
+
+    async validateSortingLowToHighPrice(): Promise<void> {
+        await this.sortSelect.click();
+        await this.sortSelect.selectOption({ value: "lowToHigh" });
+
+        const productPrices = await Promise.all(
+            (await this.productPrices.all())
+                .map(async (priceLocator) => {
+                    return Number((await priceLocator.innerText()).split(' ').shift());
+                })
+        );
+
+        for (let i = 1; i < productPrices.length; i++) {
+            expect(productPrices[i]).toBeGreaterThanOrEqual(productPrices[i - 1]);
+        }
+    };
 };

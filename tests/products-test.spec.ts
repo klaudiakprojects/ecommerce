@@ -35,4 +35,5 @@ test('Verify sorting', async ({ page }) => {
   await categorypage.validateSortingFromAToZ(productsNamesAZ);
   await categorypage.validateSortingFromZToA(productsNamesZA.ground);
   await categorypage.validateSortingHighToLowPrice();
+  await categorypage.validateSortingLowToHighPrice();
 });
