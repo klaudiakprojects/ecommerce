@@ -18,3 +18,17 @@ test('Add product to the cart', async ({ page }) => {
     await productPage.validateProductPage();
     await cartPage.addProductToTheCart();
 });
+
+test('Add two the same products to the cart', async ({ page }) => {
+    const productPage = new ProductPage(page);
+    const mainPage = new MainPage(page);
+    const categoryPage = new CategoryPage(page);
+    const cartPage = new CartPage(page);
+
+  
+    await productPage.goTo();
+    await mainPage.goToGroundCategory();
+    await categoryPage.goToFirstProduct();
+    await productPage.validateProductPage();
+    await cartPage.addTheSameProductToTheCartTwice();
+});
