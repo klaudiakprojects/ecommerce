@@ -3,7 +3,7 @@ import allProducts from '../../src/Components/Assets/data.js';
 import { waitFor } from '@testing-library/react';
 
 
-export class Mainpage {
+export class MainPage {
     readonly page: Page;
     readonly groundCategoryButton: Locator;
     readonly beansCategoryButton: Locator;
@@ -111,6 +111,7 @@ export class Mainpage {
         expect(this.footerFAQLink).toHaveText('FAQ');
         expect(this.footerFAQLink).not.toBeDisabled();
         await this.footerFAQLink.click();
+        await this.footerPagesH2.waitFor({ state: 'visible' });
         expect(this.footerPagesH2).toContainText('FAQ');
     };
 
@@ -119,6 +120,7 @@ export class Mainpage {
         expect(this.footerContactUs).toHaveText('Contact us');
         expect(this.footerContactUs).not.toBeDisabled();
         await this.footerContactUs.click();
+        await this.footerPagesH2.waitFor({ state: 'visible' });
         expect(this.footerPagesH2).toContainText('Contact us');
     };
 

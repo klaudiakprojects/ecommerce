@@ -3,8 +3,7 @@ import allProducts from '../../src/Components/Assets/data.js';
 import { waitFor } from '@testing-library/react';
 
 
-export class Categorypage {
-
+export class CategoryPage {
     readonly page: Page;
     readonly groundCategoryButton: Locator;
     readonly beansCategoryButton: Locator;

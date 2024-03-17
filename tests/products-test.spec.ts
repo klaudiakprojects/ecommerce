@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { ProductPage } from './Pages/productpage';
-import { Mainpage } from './Pages/mainpage';
-import { Categorypage } from './Pages/categorypage';
+import { MainPage } from './Pages/mainpage';
+import { CategoryPage } from './Pages/categorypage';
 
 test('Verify product page', async ({ page }) => {
   const productPage = new ProductPage(page);
-  const mainpage = new Mainpage(page);
-  const categorypage = new Categorypage(page);
+  const mainpage = new MainPage(page);
+  const categorypage = new CategoryPage(page);
 
   await productPage.goTo();
   await mainpage.goToGroundCategory();
@@ -16,8 +16,8 @@ test('Verify product page', async ({ page }) => {
 
 test('Verify sorting', async ({ page }) => {
   const productPage = new ProductPage(page);
-  const mainpage = new Mainpage(page);
-  const categorypage = new Categorypage(page);
+  const mainpage = new MainPage(page);
+  const categorypage = new CategoryPage(page);
 
   const productsNamesZA = {
     ground: [
