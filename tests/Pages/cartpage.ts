@@ -14,6 +14,7 @@ export class CartPage {
     readonly cartProductPrice: Locator;
     readonly cartProductQuantity: Locator;
     readonly cartTotalProductsPrice: Locator;
+    readonly product: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -27,6 +28,7 @@ export class CartPage {
         this.cartProductPrice = page.locator('.product-price');
         this.cartProductQuantity = page.locator('.product-quantity');
         this.cartTotalProductsPrice = page.locator('.summary-container');
+        this.product = page.locator('.item');
     };
 
     async goTo(): Promise<void> {
@@ -55,10 +57,30 @@ export class CartPage {
         expect(this.addToCartButton).toContainText('ADD TO CART');
         await this.addToCartButton.dblclick();
         await this.goToCartButton.click();
-        const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0])
+        const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
         expect(await this.cartProductTitle.innerText()).toContain(productPageTitle);
         expect(Number((await this.cartProductPrice.innerText()).split(" ")[0])).toEqual(productPagePrice);
         expect(await this.cartProductQuantity.innerText()).toEqual('Quantity: 2');
+        expect(Number(await this.cartTotalProductsPrice.innerText())).toEqual(totalProductsPriceCart);
+    };
+
+    async addTwoDifferentProductsToTheCart(): Promise<void> {
+        const [productPageTitle, productPagePrice] = await Promise.all([
+            this.productTitle.innerText(),
+            Number((await this.productPrice.innerText()).split(" ")[0])
+        ]);
+        expect(this.addToCartButton).toContainText('ADD TO CART');
+        await this.addToCartButton.click();
+        await this.page.goBack();
+        await this.product.nth(2).click();
+        const [productPageTitle2, productPagePrice2] = await Promise.all([
+            this.productTitle.innerText(),
+            Number((await this.productPrice.innerText()).split(" ")[0])
+        ]);
+        await this.addToCartButton.click();
+        await this.goToCartButton.click();
+        const fullPriceOfTwoProducts = Number(productPagePrice + productPagePrice2).toFixed(2);
+        const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
         expect(Number(await this.cartTotalProductsPrice.innerText())).toEqual(totalProductsPriceCart);
     };
 };

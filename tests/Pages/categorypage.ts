@@ -21,6 +21,7 @@ export class CategoryPage {
     readonly sortPriceHighToLow: Locator;
     readonly productTitles: Locator;
     readonly productPrices: Locator;
+    readonly secondProduct: Locator;
 
 
     constructor(page: Page) {
@@ -37,6 +38,7 @@ export class CategoryPage {
         this.productTitles = page.locator('.item p');
         this.productPrices = page.locator('.item span');
         this.sortSelect = page.locator('.sort');
+        this.secondProduct = page.locator('.item').nth(1);
     }
 
     async goTo(): Promise<void> {
@@ -45,6 +47,10 @@ export class CategoryPage {
 
     async goToFirstProduct(): Promise<void> {
         await this.firstProductOnCategoryPage.click();
+    }
+
+    async goToSecondProduct(): Promise<void> {
+        await this.secondProduct.click();
     }
 
     async validateProductPage(): Promise<void> {
