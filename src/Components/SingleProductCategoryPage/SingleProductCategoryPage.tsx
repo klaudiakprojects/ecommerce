@@ -32,7 +32,7 @@ const addToCart = (id: number, quantity: number) => {
   if (existingCartItem) {
     existingCartItem.quantity += quantity
   } else {
-    existingCart.push({id, quantity})
+    existingCart.push({ id, quantity })
   }
 
   const newCart = JSON.stringify(existingCart);
@@ -52,13 +52,13 @@ const SingleProductCategoryPage: React.FC = (props) => {
 
   return (
     <div className="product">
-                <img className="product-image" src={require(`../Assets/${product.image}`)} alt={product.name} />
+      <img className="product-image" src={require(`../Assets/${product.image}`)} alt={product.name} />
       <div className="product-details">
         <p>{product.name}</p>
         <div className="product-new-price">
           {<span>{product.price} zł</span>}
         </div>
-        <button className="add-to-cart" onClick={() => {addToCart(product.id, 1)}}>ADD TO CART</button>
+        <button className="add-to-cart" onClick={() => { addToCart(product.id, 1) }}>ADD TO CART</button>
         <div className="product-description">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sagittis mi sapien, in porttitor lorem porta commodo. In purus dolor, tristique non massa placerat, aliquam fringilla sem. Phasellus non mauris neque.
           Maecenas sed justo sed tortor pellentesque eleifend. In hac habitasse platea dictumst. Curabitur maximus ligula id risus porttitor elementum. Praesent sit amet diam in metus rhoncus efficitur at sit amet orci.

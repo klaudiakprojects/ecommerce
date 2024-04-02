@@ -56,9 +56,23 @@ export const Products = () => {
   );
 };
 
+const getCategoryProducts = async () => {
+  const response = await fetch('http://localhost:8888/category/beans', {
+    method: 'get'
+  });
+  return response.json();
+};
+
 const Recommended: React.FC<{ category: string, sort: string }> = ({ category, sort }) => {
 
-  const categoryProducts = allProducts.filter((product: Product) => product.type === category)
+  const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      setCategoryProducts(await getCategoryProducts());
+    };
+    fetchProduct();
+  }, []);
 
   if (sort === 'lowToHigh') {
   categoryProducts.sort((a, b) => a.price - b.price);
