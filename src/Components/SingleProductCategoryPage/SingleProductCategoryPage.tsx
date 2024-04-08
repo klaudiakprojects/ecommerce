@@ -17,8 +17,16 @@ interface CartItem {
   quantity: number;
 }
 
+export const addProductsToTheCart = async (id: any, quantity: any) => {
+  const response = await fetch(`http://localhost:8888/cart`, {
+    method: 'post',
+    body: JSON.stringify({ id, quantity }),
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+  });
+  return response.json();
+};
+
 const addToCart = (id: number, quantity: number) => {
-  console.log("Dodano do koszyka!");
 
   const product = allProducts.find(product =>
     product.id === id
@@ -27,7 +35,7 @@ const addToCart = (id: number, quantity: number) => {
   const existingCartStorage = localStorage.getItem('cart-items') || '[]';
   const existingCart: CartItem[] = JSON.parse(existingCartStorage);
 
-  const existingCartItem = existingCart.find(item => item.id === id);
+  const existingCartItem:any = existingCart.find(item => item.id === id);
 
   if (existingCartItem) {
     existingCartItem.quantity += quantity
@@ -36,10 +44,23 @@ const addToCart = (id: number, quantity: number) => {
   }
 
   const newCart = JSON.stringify(existingCart);
-  console.log(newCart)
   localStorage.setItem('cart-items', newCart)
-};
 
+  const usedProductIds:any = [];
+  function generateProductId() {
+    const productId = Math.floor(Math.random() * 900) + 1;
+    return productId;
+}
+
+const productId = generateProductId();
+
+if (usedProductIds.includes(productId)) {
+  return;
+}
+
+addProductsToTheCart(productId, quantity);
+
+};
 
 const SingleProductCategoryPage: React.FC = (props) => {
 

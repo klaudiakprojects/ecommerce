@@ -8,9 +8,23 @@ interface CartItem {
   quantity: number;
 }
 
+export const getProductsFromTheCart = async () => {
+  const response = await fetch(`http://localhost:8888/cart`, {
+    method: 'get'
+  });
+  return response.json();
+};
+
+export const deleteProductsFromTheCart = async (id: any) => {
+  await fetch(`http://localhost:8888/cart/{$id}`, {
+        method: 'DELETE',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    });
+}
 const CartProducts: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [totalCartPrice, setTotalCartPrice] = useState<number>(0);
+  
 
   useEffect(() => {
     const cartStorage = localStorage.getItem('cart-items');
@@ -25,7 +39,7 @@ const CartProducts: React.FC = () => {
 
       setTotalCartPrice(totalPrice);
     }
-  }, []); 
+  }, []);
 
   const getProductDetails = (productId: number) => {
     const product = allProducts.find((product) => product.id === productId);
@@ -38,6 +52,7 @@ const CartProducts: React.FC = () => {
       localStorage.setItem('cart-items', JSON.stringify(updatedCart));
       return updatedCart;
     });
+    deleteProductsFromTheCart(id)
   };
 
   return (

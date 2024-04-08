@@ -12,6 +12,13 @@ interface Product {
   type: string;
 }
 
+export const getCategoryProducts = async (category: string) => {
+  const response = await fetch(`http://localhost:8888/category/${category}`, {
+    method: 'get'
+  });
+  return response.json();
+};
+
 export const Products = () => {
   const location = useLocation();
   const [currentCategoryName, setCurrentCategoryName] = useState('');
@@ -26,19 +33,14 @@ export const Products = () => {
 
     updateCategoryName();
 
-    window.addEventListener('popstate', updateCategoryName);
-
     return () => {
       window.removeEventListener('popstate', updateCategoryName);
     };
   }, [location.pathname]);
 
-  const sortProducts = (e: any) => {
+  const sortProducts = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sortOption = e.target.value;
-
     setSort(sortOption);
-
-
   }
 
   return (
@@ -56,36 +58,37 @@ export const Products = () => {
   );
 };
 
-const getCategoryProducts = async () => {
-  const response = await fetch('http://localhost:8888/category/beans', {
-    method: 'get'
-  });
-  return response.json();
-};
-
 const Recommended: React.FC<{ category: string, sort: string }> = ({ category, sort }) => {
 
   const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
-      setCategoryProducts(await getCategoryProducts());
+      const products = await getCategoryProducts(category);
+      setCategoryProducts(products);
     };
     fetchProduct();
-  }, []);
+  }, [category]);
 
-  if (sort === 'lowToHigh') {
-  categoryProducts.sort((a, b) => a.price - b.price);
-  } else if (sort === 'highToLow') {
-    categoryProducts.sort((a, b) => b.price - a.price)
-  } else if (sort === 'asc') {
-    categoryProducts.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sort === 'desc') {
-    categoryProducts.sort((a,b) => b.name.localeCompare(a.name));
-  }
+  useEffect(() => {
+    const sortProducts = () => {
+      const sortedProducts = [...categoryProducts];
+      if (sort === 'lowToHigh') {
+        sortedProducts.sort((a, b) => a.price - b.price);
+      } else if (sort === 'highToLow') {
+        sortedProducts.sort((a, b) => b.price - a.price);
+      } else if (sort === 'asc') {
+        sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (sort === 'desc') {
+        sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+      }
+      setCategoryProducts(sortedProducts);
+    };
+
+    sortProducts();
+  }, [sort]);
 
   const recommendedProducts = categoryProducts.slice(0, 8);
-
 
   return (
     <div className='recommended-products'>
@@ -101,7 +104,6 @@ const Recommended: React.FC<{ category: string, sort: string }> = ({ category, s
         ))}
       </div>
     </div>
-
   );
 };
 
