@@ -17,10 +17,10 @@ interface CartItem {
   quantity: number;
 }
 
-export const addProductsToTheCart = async (id: any, quantity: any) => {
+export const addProductsToTheCart = async (productId: any, quantity: any) => {
   const response = await fetch(`http://localhost:8888/cart`, {
     method: 'post',
-    body: JSON.stringify({ id, quantity }),
+    body: JSON.stringify({ productId, quantity }),
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
   });
   return response.json();
@@ -49,16 +49,19 @@ const addToCart = (id: number, quantity: number) => {
   const usedProductIds:any = [];
   function generateProductId() {
     const productId = Math.floor(Math.random() * 900) + 1;
+    usedProductIds.push(productId)
     return productId;
 }
 
 const productId = generateProductId();
 
 if (usedProductIds.includes(productId)) {
-  return;
+ generateProductId();
+} else {
+  return productId;
 }
 
-addProductsToTheCart(productId, quantity);
+addProductsToTheCart(id, quantity);
 
 };
 

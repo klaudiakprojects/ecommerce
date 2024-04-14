@@ -8,6 +8,8 @@ const migration = async () => {
     })
     await client.connect()
 
+    await client.query("DROP TABLE products, cart_items")
+
     const result = await client.query(
         `CREATE TABLE products (
             id SERIAL PRIMARY KEY,
@@ -19,7 +21,9 @@ const migration = async () => {
         );
         CREATE TABLE cart_items (
             id SERIAL PRIMARY KEY,
-            quantity INT
+            product_id INT NOT NULL,
+            quantity INT NOT NULL,
+            FOREIGN KEY (product_id) REFERENCES products(id)
         );
         INSERT INTO products (name, weight, image, price, type) VALUES
         ('Coffee Costa Rica', 0.5, 'product1.jpg', 15.99, 'beans'),
@@ -36,7 +40,7 @@ const migration = async () => {
         ('Coffee Gwatemala', 0.6, 'product1.jpg', 20.99, 'promotions');
         `
     );
-    console.log(result.rows)
+    console.log("Succesful migration")
 }
 
 migration().then();
