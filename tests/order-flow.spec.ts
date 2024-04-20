@@ -3,7 +3,27 @@ import { MainPage } from './Pages/mainpage';
 import { ProductPage } from './Pages/productpage';
 import { CategoryPage } from './Pages/categorypage';
 import { CartPage } from './Pages/cartpage';
+import { Client } from 'pg';
 
+async function clearDatabase() {
+    const client = new Client({
+      user: 'postgres',
+      password: 'postgres',
+      database: 'products'
+    })
+    await client.connect();
+  
+    const res = await client.query('DELETE FROM cart_items');
+    await client.end();
+  };
+
+  test.beforeEach(async () => {
+    await clearDatabase();  
+  });
+  
+  test.afterEach(async () => {
+    await clearDatabase();
+  });
 
 test('Add product to the cart', async ({ page }) => {
     const productPage = new ProductPage(page);

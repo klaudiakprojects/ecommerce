@@ -32,34 +32,19 @@ const addToCart = (id: number, quantity: number) => {
     product.id === id
   )
 
-  const existingCartStorage = localStorage.getItem('cart-items') || '[]';
-  const existingCart: CartItem[] = JSON.parse(existingCartStorage);
+  // const existingCartStorage = localStorage.getItem('cart-items') || '[]';
+  // const existingCart: CartItem[] = JSON.parse(existingCartStorage);
 
-  const existingCartItem:any = existingCart.find(item => item.id === id);
+  // const existingCartItem:any = existingCart.find(item => item.id === id);
 
-  if (existingCartItem) {
-    existingCartItem.quantity += quantity
-  } else {
-    existingCart.push({ id, quantity })
-  }
+  // if (existingCartItem) {
+  //   existingCartItem.quantity += quantity
+  // } else {
+  //   existingCart.push({ id, quantity })
+  // }
 
-  const newCart = JSON.stringify(existingCart);
-  localStorage.setItem('cart-items', newCart)
-
-  const usedProductIds:any = [];
-  function generateProductId() {
-    const productId = Math.floor(Math.random() * 900) + 1;
-    usedProductIds.push(productId)
-    return productId;
-}
-
-const productId = generateProductId();
-
-if (usedProductIds.includes(productId)) {
- generateProductId();
-} else {
-  return productId;
-}
+  // const newCart = JSON.stringify(existingCart);
+  // localStorage.setItem('cart-items', newCart)
 
 addProductsToTheCart(id, quantity);
 

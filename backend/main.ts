@@ -93,10 +93,14 @@ app.post('/cart', async (req: any, res: any) => {
         database: 'products'
     })
     await client.connect()
+    const existingCartItem = await client.query('SELECT * FROM cart_items WHERE product_id = $1', [req.body.productId]);
 
-    const result = await client.query('INSERT INTO cart_items (product_id, quantity) VALUES ($1, $2)',
-        [req.body.productId, req.body.quantity]
-    );
+    if (existingCartItem.rows.length > 0) {
+        const newQuantity = existingCartItem.rows[0].quantity + req.body.quantity;
+        await client.query('UPDATE cart_items SET quantity = $1 WHERE product_id = $2', [newQuantity, req.body.productId]);
+    } else {
+        await client.query('INSERT INTO cart_items (product_id, quantity) VALUES ($1, $2)', [req.body.productId, req.body.quantity]);
+    }
 
     res.status(200).send([]);
 })
@@ -115,7 +119,7 @@ app.get('/cart', async (req: any, res: any) => {
     res.status(200).send(result.rows);
 })
 
-app.delete('/cart', async (req: any, res: any) => {
+app.delete('/cart/:id', async (req: any, res: any) => {
     const client = new Client({
         user: 'postgres',
         password: 'postgres',

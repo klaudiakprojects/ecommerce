@@ -4,11 +4,17 @@ import './CartProducts.css';
 
 
 interface CartItem {
-  id: number;
+  cart_item_id: number;
+  product_id: number;
   quantity: number;
+  name: string;
+  weight: string;
+  image: string;
+  price: string;
+  type: string;
 }
 
-export const getProductsFromTheCart = async () => {
+export const getProductsFromTheCart = async (): Promise<CartItem[]> => {
   const response = await fetch(`http://localhost:8888/cart`, {
     method: 'get'
   });
@@ -16,39 +22,36 @@ export const getProductsFromTheCart = async () => {
 };
 
 export const deleteProductsFromTheCart = async (id: any) => {
-  await fetch(`http://localhost:8888/cart/{$id}`, {
-        method: 'DELETE',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-    });
+  await fetch(`http://localhost:8888/cart/${id}`, {
+    method: 'DELETE',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+  });
 }
 const CartProducts: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [totalCartPrice, setTotalCartPrice] = useState<number>(0);
-  
+
 
   useEffect(() => {
-    const cartStorage = localStorage.getItem('cart-items');
-    if (cartStorage) {
-      const parsedCart: CartItem[] = JSON.parse(cartStorage);
-      setCartItems(parsedCart);
+    const fetchProductsFromTheCart = async () => {
+      const productsFromTheCart = await getProductsFromTheCart();
+      setCartItems(productsFromTheCart);
 
-      const totalPrice = parsedCart.reduce((total, item) => {
-        const product = allProducts.find((product) => product.id === item.id);
-        return total + (product?.price || 0) * item.quantity;
+      const totalCartPrice = productsFromTheCart.reduce((total, item:any) => {
+        return total + (item.price || 0) * item.quantity;
       }, 0);
 
-      setTotalCartPrice(totalPrice);
-    }
+      setTotalCartPrice(totalCartPrice);
+    };
+    fetchProductsFromTheCart();
+
   }, []);
 
-  const getProductDetails = (productId: number) => {
-    const product = allProducts.find((product) => product.id === productId);
-    return product || { name: '', price: 0, image: '' };
-  };
+
 
   const deleteItem = (id: number) => {
     setCartItems(prevItems => {
-      const updatedCart = prevItems.filter(item => item.id !== id);
+      const updatedCart = prevItems.filter(item => item.cart_item_id !== id);
       localStorage.setItem('cart-items', JSON.stringify(updatedCart));
       return updatedCart;
     });
@@ -60,18 +63,18 @@ const CartProducts: React.FC = () => {
       <h2>Your Cart</h2>
       <ul className="cart-list">
         {cartItems.map((item) => {
-          const productDetails = getProductDetails(item.id);
+          // const productDetails = getProductsFromTheCart();
           return (
-            <li key={item.id} className="cart-item">
+            <li key={item.product_id} className="cart-item">
               <div className="product-info">
-                <img className="product-image" src={require(`../Assets/${productDetails.image}`)} alt={productDetails.name} />
+                <img className="product-image" src={require(`../Assets/${item.image}`)} alt={item.name} />
 
                 <div className="product-details">
-                  <span className="product-name">{productDetails.name}</span>
-                  <span className="product-price">{productDetails.price} zł</span>
+                  <span className="product-name">{item.name}</span>
+                  <span className="product-price">{item.price} zł</span>
                   <span className="product-quantity">Quantity: {item.quantity}</span>
                 </div>
-                <button className="delete-button" onClick={() => deleteItem(item.id)}>DELETE</button>
+                <button className="delete-button" onClick={() => deleteItem(item.cart_item_id)}>DELETE</button>
               </div>
             </li>
           );
