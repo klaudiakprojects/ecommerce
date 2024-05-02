@@ -55,10 +55,11 @@ export class CartPage {
             Number((await this.productPrice.innerText()).split(" ")[0]),
         ]);
         expect(this.addToCartButton).toContainText('ADD TO CART');
-        await this.addToCartButton.dblclick();
+        await this.addToCartButton.click();
+        await this.addToCartButton.click();
         await this.goToCartButton.click();
         const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
-        expect(await this.cartProductTitle.innerText()).toContain(productPageTitle);
+        expect((await this.cartProductTitle.innerText())).toContain(productPageTitle);
         expect(Number((await this.cartProductPrice.innerText()).split(" ")[0])).toEqual(productPagePrice);
         expect(await this.cartProductQuantity.innerText()).toEqual('Quantity: 2');
         expect(Number(await this.cartTotalProductsPrice.innerText())).toEqual(totalProductsPriceCart);

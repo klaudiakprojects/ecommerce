@@ -127,10 +127,20 @@ app.delete('/cart/:id', async (req: any, res: any) => {
     })
     await client.connect()
 
-    const result = await client.query('DELETE FROM cart_items WHERE id=$1',
-        [req.params.id]);
 
-    res.status(200).send(result.rows);
+    const existingCartItemRes = await client.query('SELECT * FROM cart_items WHERE id = $1', [req.params.id]);
+    const existingCartItem = existingCartItemRes.rows[0]; 
+
+    if (existingCartItem.quantity > 1) {
+       await client.query('UPDATE cart_items SET quantity = quantity -1 WHERE id = $1', [req.params.id]);
+    } else if (existingCartItem.quantity == 1) {
+       await client.query('DELETE FROM cart_items WHERE id = $1', [req.params.id]);
+    } else {
+        return;
+    }
+
+
+    res.status(200).send({});
 })
 
 app.listen(8888, () => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import allProducts from '../Assets/data';
 import './CartProducts.css';
+import Item from '../Items/Item';
 
 
 interface CartItem {
@@ -31,39 +32,43 @@ const CartProducts: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [totalCartPrice, setTotalCartPrice] = useState<number>(0);
 
+  const fetchProductsFromTheCart = async () => {
+    const productsFromTheCart = await getProductsFromTheCart();
+    setCartItems(productsFromTheCart);
 
+    const totalCartPrice = productsFromTheCart.reduce((total, item: any) => {
+      return total + (item.price || 0) * item.quantity;
+    }, 0);
+
+    setTotalCartPrice(Number(totalCartPrice.toFixed(2)));
+  };
   useEffect(() => {
-    const fetchProductsFromTheCart = async () => {
-      const productsFromTheCart = await getProductsFromTheCart();
-      setCartItems(productsFromTheCart);
 
-      const totalCartPrice = productsFromTheCart.reduce((total, item:any) => {
-        return total + (item.price || 0) * item.quantity;
-      }, 0);
-
-      setTotalCartPrice(totalCartPrice);
-    };
     fetchProductsFromTheCart();
 
   }, []);
 
 
 
-  const deleteItem = (id: number) => {
-    setCartItems(prevItems => {
-      const updatedCart = prevItems.filter(item => item.cart_item_id !== id);
-      localStorage.setItem('cart-items', JSON.stringify(updatedCart));
-      return updatedCart;
-    });
-    deleteProductsFromTheCart(id)
+  const deleteItem = async (id: number, quantity: number) => {
+    
+    if (quantity === 1) {
+      setCartItems(prevItems => {
+        const updatedCart = prevItems.filter(item => item.cart_item_id !== id);
+        return updatedCart;
+      });
+      deleteProductsFromTheCart(id);
+    } else if (quantity > 1) {
+      
+   await deleteProductsFromTheCart(id);
+      fetchProductsFromTheCart();
+    }
   };
-
   return (
     <div className="cart-products-container">
       <h2>Your Cart</h2>
       <ul className="cart-list">
         {cartItems.map((item) => {
-          // const productDetails = getProductsFromTheCart();
           return (
             <li key={item.product_id} className="cart-item">
               <div className="product-info">
@@ -74,7 +79,7 @@ const CartProducts: React.FC = () => {
                   <span className="product-price">{item.price} zł</span>
                   <span className="product-quantity">Quantity: {item.quantity}</span>
                 </div>
-                <button className="delete-button" onClick={() => deleteItem(item.cart_item_id)}>DELETE</button>
+                <button className="delete-button" onClick={() => deleteItem(item.cart_item_id, item.quantity)}>DELETE</button>
               </div>
             </li>
           );
