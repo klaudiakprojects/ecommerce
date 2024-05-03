@@ -38,9 +38,11 @@ const CartProducts: React.FC = () => {
 
     const totalCartPrice = productsFromTheCart.reduce((total, item: any) => {
       return total + (item.price || 0) * item.quantity;
+
     }, 0);
 
     setTotalCartPrice(Number(totalCartPrice.toFixed(2)));
+
   };
   useEffect(() => {
 
@@ -51,19 +53,11 @@ const CartProducts: React.FC = () => {
 
 
   const deleteItem = async (id: number, quantity: number) => {
-    
-    if (quantity === 1) {
-      setCartItems(prevItems => {
-        const updatedCart = prevItems.filter(item => item.cart_item_id !== id);
-        return updatedCart;
-      });
-      deleteProductsFromTheCart(id);
-    } else if (quantity > 1) {
-      
-   await deleteProductsFromTheCart(id);
-      fetchProductsFromTheCart();
-    }
+
+    await deleteProductsFromTheCart(id);
+    await fetchProductsFromTheCart();
   };
+
   return (
     <div className="cart-products-container">
       <h2>Your Cart</h2>

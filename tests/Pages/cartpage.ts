@@ -15,6 +15,9 @@ export class CartPage {
     readonly cartProductQuantity: Locator;
     readonly cartTotalProductsPrice: Locator;
     readonly product: Locator;
+    readonly deleteProductButton: Locator;
+    readonly cartItem: Locator;
+    readonly cartList: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -29,6 +32,9 @@ export class CartPage {
         this.cartProductQuantity = page.locator('.product-quantity');
         this.cartTotalProductsPrice = page.locator('.summary-container');
         this.product = page.locator('.item');
+        this.deleteProductButton = page.locator('.delete-button');
+        this.cartItem = page.locator('.cart-item');
+        this.cartList = page.locator('.cart-list');
     };
 
     async goTo(): Promise<void> {
@@ -84,4 +90,21 @@ export class CartPage {
         const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
         expect(Number(await this.cartTotalProductsPrice.innerText())).toEqual(totalProductsPriceCart);
     };
+
+    async removeOneProductFromTheCart(): Promise<void> {
+        await this.deleteProductButton.click();
+        await this.cartItem.waitFor({ state: "detached" });
+        expect(this.cartItem).toHaveCount(0);
+        const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
+        expect(Number(await this.cartTotalProductsPrice.innerText())).toEqual(totalProductsPriceCart);
+    }
+
+    async removeTwoTheSameProductsFromTheCart(): Promise<void> {
+        await this.deleteProductButton.click();
+        await this.deleteProductButton.click();
+        await this.cartItem.waitFor({ state: "detached" });
+        expect(this.cartItem).toHaveCount(0);
+        const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
+        expect(Number(await this.cartTotalProductsPrice.innerText())).toEqual(totalProductsPriceCart);
+    }
 };

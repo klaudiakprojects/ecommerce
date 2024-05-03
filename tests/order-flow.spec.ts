@@ -63,6 +63,35 @@ test('Add two different products to the cart', async ({ page }) => {
     await mainPage.goToGroundCategory();
     await categoryPage.goToFirstProduct();
     await productPage.validateProductPage();
-    // await categoryPage.goToSecondProduct();
     await cartPage.addTwoDifferentProductsToTheCart();
+});
+
+test('Remove one product from the cart', async ({ page }) => {
+  const productPage = new ProductPage(page);
+  const mainPage = new MainPage(page);
+  const categoryPage = new CategoryPage(page);
+  const cartPage = new CartPage(page);
+
+
+  await productPage.goTo();
+  await mainPage.goToGroundCategory();
+  await categoryPage.goToFirstProduct();
+  await productPage.validateProductPage();
+  await cartPage.addProductToTheCart();
+  await cartPage.removeOneProductFromTheCart();
+});
+
+test('Remove two the same products to the cart', async ({ page }) => {
+  const productPage = new ProductPage(page);
+  const mainPage = new MainPage(page);
+  const categoryPage = new CategoryPage(page);
+  const cartPage = new CartPage(page);
+
+
+  await productPage.goTo();
+  await mainPage.goToGroundCategory();
+  await categoryPage.goToFirstProduct();
+  await productPage.validateProductPage();
+  await cartPage.addTheSameProductToTheCartTwice();
+  await cartPage.removeTwoTheSameProductsFromTheCart();
 });
