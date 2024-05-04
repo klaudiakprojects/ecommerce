@@ -1,7 +1,4 @@
 import { expect, Locator, Page } from '@playwright/test';
-import allProducts from '../../src/Components/Assets/data.js';
-import { waitFor } from '@testing-library/react';
-
 
 export class CategoryPage {
     readonly page: Page;
@@ -23,7 +20,6 @@ export class CategoryPage {
     readonly productPrices: Locator;
     readonly secondProduct: Locator;
 
-
     constructor(page: Page) {
         this.page = page;
         this.groundCategoryButton = page.locator('.nav-menu li:has-text("Ground")');
@@ -39,7 +35,7 @@ export class CategoryPage {
         this.productPrices = page.locator('.item span');
         this.sortSelect = page.locator('.sort');
         this.secondProduct = page.locator('.item').nth(1);
-    }
+    };
 
     async goTo(): Promise<void> {
         await this.page.goto('localhost:3000');
@@ -47,11 +43,11 @@ export class CategoryPage {
 
     async goToFirstProduct(): Promise<void> {
         await this.firstProductOnCategoryPage.click();
-    }
+    };
 
     async goToSecondProduct(): Promise<void> {
         await this.secondProduct.click();
-    }
+    };
 
     async validateProductPage(): Promise<void> {
         const firstProductTitleOnCategoryPage = await this.firstProductTitleOnCategoryPage.innerText();
@@ -60,7 +56,7 @@ export class CategoryPage {
         const productPriceOnProductPage = await this.productPriceOnProductPage.innerText();
         expect(this.firstProductTitleOnCategoryPage).toHaveText(productTitleOnProductPage);
         expect(this.firstProductPriceOnCategoryPage).toHaveText(productPriceOnProductPage);
-    }
+    };
 
     async validateSortingFromAToZ(productsNamesAZ: string[]): Promise<void> {
         await this.sortSelect.click();
@@ -101,7 +97,7 @@ export class CategoryPage {
 
         for (let i = 1; i < productPrices.length; i++) {
             expect(productPrices[i]).toBeLessThanOrEqual(productPrices[i - 1]);
-        }
+        };
     };
 
     async validateSortingLowToHighPrice(): Promise<void> {
@@ -117,6 +113,6 @@ export class CategoryPage {
 
         for (let i = 1; i < productPrices.length; i++) {
             expect(productPrices[i]).toBeGreaterThanOrEqual(productPrices[i - 1]);
-        }
+        };
     };
 };

@@ -1,6 +1,4 @@
 import { expect, Locator, Page } from '@playwright/test';
-import allProducts from '../../src/Components/Assets/data.js';
-import { waitFor } from '@testing-library/react';
 
 export class CartPage {
     readonly page: Page;
@@ -42,7 +40,7 @@ export class CartPage {
     };
 
     async addProductToTheCart(): Promise<void> {
-       const [productPageTitle, productPagePrice] = await Promise.all([
+        const [productPageTitle, productPagePrice] = await Promise.all([
             this.productTitle.innerText(),
             this.productPrice.innerText()
         ]);
@@ -64,7 +62,7 @@ export class CartPage {
         await this.addToCartButton.click();
         await this.addToCartButton.click();
         await this.goToCartButton.click();
-        const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
+        const totalProductsPriceCart = Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
         expect((await this.cartProductTitle.innerText())).toContain(productPageTitle);
         expect(Number((await this.cartProductPrice.innerText()).split(" ")[0])).toEqual(productPagePrice);
         expect(await this.cartProductQuantity.innerText()).toEqual('Quantity: 2');
@@ -87,7 +85,7 @@ export class CartPage {
         await this.addToCartButton.click();
         await this.goToCartButton.click();
         const fullPriceOfTwoProducts = Number(productPagePrice + productPagePrice2).toFixed(2);
-        const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
+        const totalProductsPriceCart = Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
         expect(Number(await this.cartTotalProductsPrice.innerText())).toEqual(totalProductsPriceCart);
     };
 
@@ -95,16 +93,16 @@ export class CartPage {
         await this.deleteProductButton.click();
         await this.cartItem.waitFor({ state: "detached" });
         expect(this.cartItem).toHaveCount(0);
-        const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
+        const totalProductsPriceCart = Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
         expect(Number(await this.cartTotalProductsPrice.innerText())).toEqual(totalProductsPriceCart);
-    }
+    };
 
     async removeTwoTheSameProductsFromTheCart(): Promise<void> {
         await this.deleteProductButton.click();
         await this.deleteProductButton.click();
         await this.cartItem.waitFor({ state: "detached" });
         expect(this.cartItem).toHaveCount(0);
-        const totalProductsPriceCart =  Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
+        const totalProductsPriceCart = Number((await this.cartTotalProductsPrice.innerText()).split(" ")[0]);
         expect(Number(await this.cartTotalProductsPrice.innerText())).toEqual(totalProductsPriceCart);
-    }
+    };
 };

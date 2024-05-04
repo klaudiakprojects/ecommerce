@@ -1,6 +1,4 @@
 import { expect, Locator, Page } from '@playwright/test';
-import allProducts from '../../src/Components/Assets/data.js';
-import { waitFor } from '@testing-library/react';
 
 export class ProductPage {
     readonly page: Page;
@@ -17,8 +15,7 @@ export class ProductPage {
         this.addToCartButton = page.locator('.add-to-cart');
         this.productDescription = page.locator('.product-description');
         this.productImage = page.locator('.product-image');
-    }
-
+    };
 
     async goTo(): Promise<void> {
         await this.page.goto('localhost:3000');
@@ -34,5 +31,5 @@ export class ProductPage {
 
     async validateProductFromCategoryPage() {
 
-    }
+    };
 };

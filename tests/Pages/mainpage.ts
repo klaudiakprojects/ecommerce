@@ -1,7 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
 import allProducts from '../../src/Components/Assets/data.js';
-import { waitFor } from '@testing-library/react';
-
 
 export class MainPage {
     readonly page: Page;
@@ -145,7 +143,7 @@ export class MainPage {
         await Promise.all(allRecommendedProductImgHandles.map(async (img: any) => {
             await expect(img).toBeVisible();
         }));
-              
+
         expect(this.recommendedProductImg).toHaveCount(3);
         expect(this.recommendedProductTitle).toHaveCount(3);
         expect(this.recommendedProductPrice).toHaveCount(3);
