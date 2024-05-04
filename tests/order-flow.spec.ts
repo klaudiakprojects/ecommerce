@@ -81,7 +81,7 @@ test('Remove one product from the cart', async ({ page }) => {
   await cartPage.removeOneProductFromTheCart();
 });
 
-test('Remove two the same products to the cart', async ({ page }) => {
+test('Remove two the same products from the cart', async ({ page }) => {
   const productPage = new ProductPage(page);
   const mainPage = new MainPage(page);
   const categoryPage = new CategoryPage(page);

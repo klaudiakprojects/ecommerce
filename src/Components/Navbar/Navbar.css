@@ -30,6 +30,10 @@
 .nav-login {
     display: flex;
     margin-left: auto;
+    /* position: fixed;
+    top: 20px;
+    right: 100px;
+    z-index: 999; */
 }
 
 .nav-login button {
@@ -58,7 +62,11 @@
     outline: none;
     padding: 5px;
     font-size: 16px;
-    width: 500px;
+    width: 300px;
+    /* position: fixed;
+    top: 20px;
+    right: 300px;
+    z-index: 999; */
 }
 
 .cart-icon button a {
@@ -77,4 +85,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    /* position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999; */
 }
