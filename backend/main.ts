@@ -15,19 +15,6 @@ app.options('*', cors(corsSettings))
 
 app.use(express.json());
 
-// const connectToDatabase = (req: any) => {
-//     const client = new Client({
-//         user: 'postgres',
-//         password: 'postgres',
-//         database: 'products'
-//     })
-//     client.connect();
-//     req.lient = client;
-
-// }
-
-// app.use(connectToDatabase);
-
 app.get('/', async (req: any, res: any) => {
     const client = new Client({
         user: 'postgres',
@@ -129,12 +116,16 @@ app.delete('/cart/:id', async (req: any, res: any) => {
 
 
     const existingCartItemRes = await client.query('SELECT * FROM cart_items WHERE id = $1', [req.params.id]);
-    const existingCartItem = existingCartItemRes.rows[0]; 
+    const existingCartItem = existingCartItemRes.rows[0];
 
-    if (existingCartItem.quantity > 1) {
-       await client.query('UPDATE cart_items SET quantity = quantity -1 WHERE id = $1', [req.params.id]);
+
+    if (!existingCartItem) {
+        return res.status(404).json('Product not found in the cart');
+    }
+    else if (existingCartItem.quantity > 1) {
+        await client.query('UPDATE cart_items SET quantity = quantity -1 WHERE id = $1', [req.params.id]);
     } else if (existingCartItem.quantity == 1) {
-       await client.query('DELETE FROM cart_items WHERE id = $1', [req.params.id]);
+        await client.query('DELETE FROM cart_items WHERE id = $1', [req.params.id]);
     } else {
         return;
     }

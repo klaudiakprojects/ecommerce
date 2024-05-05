@@ -60,3 +60,11 @@ test('Get should return empty list after delete request', async ({ request }) =>
     expect(getCartItemsResAfterDelete.status()).toBe(200);
     expect(await getCartItemsResAfterDelete.json()).toStrictEqual([]);
 });
+
+test('Delete non existent cart item should return 404', async ({ request }) => {
+    const deleteCartItemRes = await request.delete(`${baseUrl}/cart/100`);
+    expect(deleteCartItemRes.status()).toBe(404);
+    const responseBody = await deleteCartItemRes.text();
+    const response = JSON.parse(responseBody)
+    expect(response).toEqual('Product not found in the cart');
+});
