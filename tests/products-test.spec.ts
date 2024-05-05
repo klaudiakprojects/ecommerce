@@ -9,8 +9,6 @@ test('Verify product page', async ({ page }) => {
   const categorypage = new CategoryPage(page);
 
   await productPage.goTo();
-  await mainpage.goToGroundCategory();
-  await categorypage.goToFirstProduct();
   await productPage.validateProductPage();
 });
 

@@ -7,6 +7,10 @@ export class ProductPage {
     readonly addToCartButton: Locator;
     readonly productDescription: Locator;
     readonly productImage: Locator;
+    readonly productTitleCategoryPage: Locator;
+    readonly productPriceCategoryPage: Locator;
+    readonly groundCategory: Locator;
+    readonly productOnCategoryPage: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -15,6 +19,10 @@ export class ProductPage {
         this.addToCartButton = page.locator('.add-to-cart');
         this.productDescription = page.locator('.product-description');
         this.productImage = page.locator('.product-image');
+        this.productTitleCategoryPage = page.locator('.item p');
+        this.productPriceCategoryPage = page.locator('.item-prices span');
+        this.groundCategory = page.locator('.nav-menu li:has-text("Ground")');
+        this.productOnCategoryPage = page.locator('.item');
     };
 
     async goTo(): Promise<void> {
@@ -22,14 +30,15 @@ export class ProductPage {
     };
 
     async validateProductPage(): Promise<void> {
-        expect(await this.productTitle.innerText()).toContain('Coffee');
-        expect(this.productImage).toBeVisible();
-        expect(this.productDescription).not.toBeEmpty();
-        expect(this.addToCartButton).not.toBeDisabled();
-        expect(this.productPrice).toBeVisible();
-    };
-
-    async validateProductFromCategoryPage() {
-
+        await this.groundCategory.click();
+        await this.productTitleCategoryPage.first().waitFor({ state: "visible" })
+        const productNameOnCategoryPage = await this.productTitleCategoryPage.first().innerText();
+        const productPriceOnCategoryPage = (await this.productPriceCategoryPage.first().innerText()).split(" ")[0];
+        await this.productOnCategoryPage.first().click();
+        const productNameOnProductPage = await this.productTitle.innerText();
+        const productPriceOnProductPage = (await this.productPrice.innerText()).split(" ")[0];
+        expect(productNameOnProductPage).toEqual(productNameOnCategoryPage);
+        expect(productPriceOnProductPage).toEqual(productPriceOnCategoryPage);
+    
     };
 };

@@ -3,9 +3,9 @@ import allProducts from '../../src/Components/Assets/data.js';
 
 export class MainPage {
     readonly page: Page;
-    readonly groundCategoryButton: Locator;
-    readonly beansCategoryButton: Locator;
-    readonly promotionsCategoryButton: Locator;
+    readonly groundCategory: Locator;
+    readonly beansCategory: Locator;
+    readonly promotionsCategory: Locator;
     readonly categoryPageHeader: Locator;
     readonly footerAboutLink: Locator;
     readonly footerFAQLink: Locator;
@@ -26,9 +26,9 @@ export class MainPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.groundCategoryButton = page.locator('.nav-menu li:has-text("Ground")');
-        this.beansCategoryButton = page.locator('.nav-menu li:has-text("Beans")');
-        this.promotionsCategoryButton = page.locator('.nav-menu li:has-text("Promotions")');
+        this.groundCategory = page.locator('.nav-menu li:has-text("Ground")');
+        this.beansCategory = page.locator('.nav-menu li:has-text("Beans")');
+        this.promotionsCategory = page.locator('.nav-menu li:has-text("Promotions")');
         this.categoryPageHeader = page.locator('.products-grid h2');
         this.footerAboutLink = page.locator('.footer-navbar li:has-text("About")');
         this.footerFAQLink = page.locator('.footer-navbar li:has-text("FAQ")');
@@ -70,7 +70,7 @@ export class MainPage {
 
     async goToGroundCategory(): Promise<void> {
         this.goTo();
-        await this.groundCategoryButton.click();
+        await this.groundCategory.click();
         expect(this.page).toHaveURL(/.*ground/);
         expect(this.categoryPageHeader).toContainText('GROUND');
         await this.getProductsId();
@@ -79,7 +79,7 @@ export class MainPage {
 
     async goToBeansCategory(): Promise<void> {
         this.goTo();
-        await this.beansCategoryButton.click();
+        await this.beansCategory.click();
         expect(this.page).toHaveURL(/.*beans/);
         expect(this.categoryPageHeader).toContainText('BEANS');
         await this.getProductsId();
@@ -88,7 +88,7 @@ export class MainPage {
 
     async goToPromotionsCategory(): Promise<void> {
         this.goTo();
-        await this.promotionsCategoryButton.click();
+        await this.promotionsCategory.click();
         expect(this.page).toHaveURL(/.*promotions/);
         expect(this.categoryPageHeader).toContainText('PROMOTIONS');
         await this.getProductsId();
