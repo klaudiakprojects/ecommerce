@@ -82,6 +82,7 @@ app.post('/cart', async (req: any, res: any) => {
     await client.connect()
     const existingCartItem = await client.query('SELECT * FROM cart_items WHERE product_id = $1', [req.body.productId]);
 
+    console.log(req.body)
     if (existingCartItem.rows.length > 0) {
         const newQuantity = existingCartItem.rows[0].quantity + req.body.quantity;
         await client.query('UPDATE cart_items SET quantity = $1 WHERE product_id = $2', [newQuantity, req.body.productId]);

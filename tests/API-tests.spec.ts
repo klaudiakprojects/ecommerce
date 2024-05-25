@@ -5,11 +5,11 @@ async function clearDatabase() {
     const client = new Client({
         user: 'postgres',
         password: 'postgres',
-        database: 'postgres'
+        database: 'products'
     })
     await client.connect();
 
-    const res = await client.query('DELETE FROM todos');
+    const res = await client.query('DELETE FROM cart_items');
     await client.end();
 };
 
