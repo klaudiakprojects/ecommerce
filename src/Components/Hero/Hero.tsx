@@ -27,7 +27,9 @@ const ImageSlider = () => {
         <img src={heroSlider1} />
         <div className="slider-caption">
           <span className="first-slider-text">Coffee beans -30%</span>
+          <Link to='/beans'>
           <button className="buy-now-button">BUY NOW</button>
+          </Link>
           </div>
 
       </div>

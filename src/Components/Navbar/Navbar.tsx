@@ -29,6 +29,7 @@ const Navbar = () => {
 
 const Search = () => {
     const [keyword, setKeyword] = useState('');
+    
 
     const navigate = useNavigate();
 
