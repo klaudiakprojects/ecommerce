@@ -68,3 +68,33 @@ test('Delete non existent cart item should return 404', async ({ request }) => {
     const response = JSON.parse(responseBody)
     expect(response).toEqual('Product not found in the cart');
 });
+
+test('Post should return 400 after sending incorrect data in body', async ({ request }) => {
+
+});
+
+const inputs = [
+    { title: 'Post null', body: { productId: null, quantity: null } },
+    { title: 'Post undefined', body: { productId: undefined, quantity: undefined } },
+    { title: 'Post empty array', body: { productId: [], quantity: [] } },
+    { title: 'Post period', body: { productId: '.', quantity: '.' } },
+    { title: 'Post string test', body: { productId: 'test', quantity: 'test' } },
+    { title: 'Post zero', body: { productId: 0, quantity: 0 } },
+    { title: 'Post negative numbers', body: { productId: -1, quantity: -2 } },
+    { title: 'Post float numbers', body: { productId: 1.2, quantity: 1.3 } },
+    { title: 'Post empty object', body: { productId: {}, quantity: {} } },
+    { title: 'Post array with strings', body: { productId: ['test'], quantity: ['test'] } },
+    { title: 'Post boolean true', body: { productId: true, quantity: true } }
+]
+
+
+inputs.forEach(input => {
+    test(`Test: ${(input.title)}`, async ({ request }) => {
+        const createCartItemRes = await request.post(`${baseUrl}/cart`, {
+            data: input.body
+        });
+
+        expect(createCartItemRes.status()).toBe(400);
+
+    })
+})
