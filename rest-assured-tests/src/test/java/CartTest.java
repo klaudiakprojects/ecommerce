@@ -7,12 +7,42 @@ import static io.restassured.RestAssured.*;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 import io.restassured.response.Response;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+
+class DatabaseUtil {
+
+    public static void clearDatabase() throws SQLException, ClassNotFoundException {
+        String jdbcUrl = "jdbc:postgresql://localhost:5432/products";
+        String username = "postgres";
+        String password = "postgres";
+
+        // Register the PostgreSQL driver
+
+        Class.forName("org.postgresql.Driver");
+
+        // Connect to the database
+
+        Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+
+        // Perform desired database operations
+
+        // Close the connection
+        connection.close();
+    }
+}
 
 public class CartTest {
 
     @BeforeClass
-    public static void setUp() {
+    public static void setUp() throws SQLException, ClassNotFoundException {
         RestAssured.baseURI = "http://localhost:8888/";
+
+
+        DatabaseUtil.clearDatabase();
     }
 
     @Test
