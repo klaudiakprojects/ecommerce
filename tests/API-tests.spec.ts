@@ -77,14 +77,19 @@ const inputs = [
     { title: 'Post null', body: { productId: null, quantity: null } },
     { title: 'Post undefined', body: { productId: undefined, quantity: undefined } },
     { title: 'Post empty array', body: { productId: [], quantity: [] } },
-    { title: 'Post period', body: { productId: '.', quantity: '.' } },
-    { title: 'Post string test', body: { productId: 'test', quantity: 'test' } },
+    { title: 'Post dot', body: { productId: '.', quantity: '.' } },
+    { title: 'Post string', body: { productId: 'test', quantity: 'test' } },
     { title: 'Post zero', body: { productId: 0, quantity: 0 } },
     { title: 'Post negative numbers', body: { productId: -1, quantity: -2 } },
     { title: 'Post float numbers', body: { productId: 1.2, quantity: 1.3 } },
     { title: 'Post empty object', body: { productId: {}, quantity: {} } },
     { title: 'Post array with strings', body: { productId: ['test'], quantity: ['test'] } },
-    { title: 'Post boolean true', body: { productId: true, quantity: true } }
+    { title: 'Post boolean', body: { productId: true, quantity: true } },
+    { title: 'Post empty body', body: {} },
+    { title: 'Post correct productId and dot in quantity', body: { productId: 1, quantity: '.' } },
+    { title: 'Post empty object in productId and correct quantity', body: { productId: [], quantity: 1 } }
+
+
 ]
 
 
