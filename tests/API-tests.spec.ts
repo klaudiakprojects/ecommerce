@@ -69,10 +69,6 @@ test('Delete non existent cart item should return 404', async ({ request }) => {
     expect(response).toEqual('Product not found in the cart');
 });
 
-test('Post should return 400 after sending incorrect data in body', async ({ request }) => {
-
-});
-
 const inputs = [
     { title: 'Post null', body: { productId: null, quantity: null } },
     { title: 'Post undefined', body: { productId: undefined, quantity: undefined } },
@@ -87,9 +83,10 @@ const inputs = [
     { title: 'Post boolean', body: { productId: true, quantity: true } },
     { title: 'Post empty body', body: {} },
     { title: 'Post correct productId and dot in quantity', body: { productId: 1, quantity: '.' } },
-    { title: 'Post empty object in productId and correct quantity', body: { productId: [], quantity: 1 } }
-
-
+    { title: 'Post empty object in productId and correct quantity', body: { productId: [], quantity: 1 } },
+    { title: 'Post string numbers', body: { productId: '2', quantity: '3' } },
+    { title: 'Post special characters', body: { productId: '%^&', quantity: '(&^&*' } },
+    { title: 'Post whitespace string', body: { productId: ' ', quantity: ' ' } }
 ]
 
 

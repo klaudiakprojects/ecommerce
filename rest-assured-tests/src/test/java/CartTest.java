@@ -1,16 +1,18 @@
 import io.restassured.RestAssured;
-import jdk.jfr.Description;
-import org.hamcrest.Matchers;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static io.restassured.RestAssured.*;
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
 import io.restassured.response.Response;
+import jdk.jfr.Description;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
 
 
 class DatabaseUtil {
@@ -20,28 +22,26 @@ class DatabaseUtil {
         String username = "postgres";
         String password = "postgres";
 
-        // Register the PostgreSQL driver
-
         Class.forName("org.postgresql.Driver");
-
-        // Connect to the database
 
         Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-        // Perform desired database operations
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM cart_items");
+        statement.executeUpdate();
 
-        // Close the connection
         connection.close();
     }
 }
 
 public class CartTest {
 
-    @BeforeClass
-    public static void setUp() throws SQLException, ClassNotFoundException {
+    @BeforeAll
+    public static void setUp() {
         RestAssured.baseURI = "http://localhost:8888/";
+    }
 
-
+    @BeforeEach
+    public void each() throws SQLException, ClassNotFoundException {
         DatabaseUtil.clearDatabase();
     }
 
@@ -115,4 +115,20 @@ given().
                 when().
                 delete("/cart/54898423").then().statusCode(404);
     }
+
+    @Test
+    public void postShouldReturn400AfterSendingIncorrectDataInBody() {
+        Object[][] inputs = {
+                { "null values", new InputData(null, null) },
+                { "undefined values", new InputData(null, null) }, // Java doesn't have 'undefined', use null
+                { "empty array", new InputData(new Object[]{}, new Object[]{}) },
+                { "period", new InputData(".", ".") },
+                { "string test", new InputData("test", "test") },
+                { "zero", new InputData(0, 0) },
+                { "negative numbers", new InputData(-1, -2) },
+                { "float numbers", new InputData(1.2, 1.3) },
+                { "empty object", new InputData(new Object(), new Object()) },
+                { "array with strings", new InputData(new String[]{"test"}, new String[]{"test"}) },
+                { "boolean true", new InputData(true, true) }
+        };
 }
