@@ -120,7 +120,7 @@ given().
     public void postShouldReturn400AfterSendingIncorrectDataInBody() {
         Object[][] inputs = {
                 { "null values", new InputData(null, null) },
-                { "undefined values", new InputData(null, null) }, // Java doesn't have 'undefined', use null
+                { "undefined values", new InputData(null, null) }, 
                 { "empty array", new InputData(new Object[]{}, new Object[]{}) },
                 { "period", new InputData(".", ".") },
                 { "string test", new InputData("test", "test") },
