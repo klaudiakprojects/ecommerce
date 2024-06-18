@@ -27,24 +27,32 @@ async function connectToDatabase() {
 
 app.get('/', async (req: any, res: any) => {
     const client = await connectToDatabase();
-    const result = await client.query(
-        'SELECT * FROM products ORDER BY id ASC'
-    );
-    console.log(result.rows)
-    res.status(200).send(result.rows);
 
-    console.log(req)
-    res.send('Serwer działa')
+    const query = req.query.q;
+
+    if (query) {
+        const resultQuerySearch = await client.query(
+            'SELECT * FROM products WHERE name ILIKE $1',
+            [`%${query}%`]);
+
+        console.log(resultQuerySearch.rows);
+        return res.status(200).json(resultQuerySearch.rows);
+    } else {
+        const result = await client.query(
+            'SELECT * FROM products ORDER BY id ASC');
+            console.log(result.rows)
+        return res.status(200).json(result.rows);
+    }
 });
 
-app.get('/category/beans', async (req:any, res:any) => {
+app.get('/category/beans', async (req: any, res: any) => {
     const client = await connectToDatabase();
     const result = await client.query('SELECT * FROM products WHERE type = $1', ['beans']);
 
     res.status(200).send(result.rows);
 });
 
-app.get('/category/ground', async (req:any, res:any) => {
+app.get('/category/ground', async (req: any, res: any) => {
     const client = await connectToDatabase();
 
     const result = await client.query('SELECT * FROM products WHERE type = $1', ['ground']);
@@ -52,7 +60,7 @@ app.get('/category/ground', async (req:any, res:any) => {
     res.status(200).send(result.rows);
 });
 
-app.get('/category/promotions', async (req:any, res:any) => {
+app.get('/category/promotions', async (req: any, res: any) => {
     const client = await connectToDatabase();
 
     const result = await client.query('SELECT * FROM products WHERE type = $1', ['promotions']);
@@ -63,13 +71,13 @@ app.get('/category/promotions', async (req:any, res:any) => {
 app.post('/cart', async (req: any, res: any) => {
     const client = await connectToDatabase();
 
-    if (typeof req.body.productId !== 'number' || !Number.isInteger(req.body.productId) || req.body.productId <= 0 ) {
+    if (typeof req.body.productId !== 'number' || !Number.isInteger(req.body.productId) || req.body.productId <= 0) {
         return res.status(400).send({ error: 'Invalid productId' });
-    } 
+    }
 
     if (typeof req.body.quantity !== 'number' || !Number.isInteger(req.body.quantity) || req.body.quantity <= 0) {
-       return res.status(400).send({ error: 'Invalid quantity' });
-   } 
+        return res.status(400).send({ error: 'Invalid quantity' });
+    }
 
     const existingCartItem = await client.query('SELECT * FROM cart_items WHERE product_id = $1', [req.body.productId]);
 
@@ -82,7 +90,7 @@ app.post('/cart', async (req: any, res: any) => {
     }
 
 
-    
+
 
     res.status(200).send([]);
 });
